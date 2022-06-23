@@ -1,7 +1,7 @@
 import requests
 import translators as ts
 from translate import Translator
-from oxford_dict import*
+import dictionary
 
 def translate():
     translator = Translator(from_lang="english", to_lang="polish")
@@ -10,14 +10,13 @@ def translate():
     word = re.text
     word = word.replace("[","").replace("]","")
     print(word)
-    oxford = Ox_dict(word)
-    merriam = Merriam_webster(word)
+    oxford = dictionary.Ox_dict(word)
+    merriam = dictionary.Merriam_webster(word)
 
-    #return oxford.search()
-    #name_coll, senses_coll = merriam.search_coll()
-    senses_the, name_the = merriam.search_the()
+    name_coll, senses_coll = merriam.search_coll()
+    name_the,senses_the= merriam.search_the()
     
-    return name_the, senses_the
+    return name_the, senses_the, name_coll, senses_coll, oxford.search()
     #translation = translator.translate(word)
     #print(translation)
 
@@ -25,4 +24,7 @@ def translate():
     #print(tr_word)
     
 if __name__ == "__main__":
-    print(translate())
+    name_the, senses_the, name_coll, senses_coll, oxford = translate()
+    print(f"Merriam Webster Thesaurus  \n{name_the}: {senses_the}\n")
+    print(f"Merriam Webster Collegiate \n{name_coll}: {senses_coll}\n")
+    print(f"Oxford Dictionary \n{oxford}")

@@ -17,11 +17,10 @@ class Ox_dict:
 
         r = requests.get(url, headers = {"app_id": self.app_id, "app_key": self.app_key})
 
-        #data = json.dumps(r.json())
-        g = json.loads(r.text)
-        #print(g)
-        if "results" in g:
-            subsenses = g["results"][0]["lexicalEntries"][0]["entries"][0]["senses"][0]["subsenses"]
+        data = json.loads(r.text)
+        
+        if "results" in data:
+            subsenses = data["results"][0]["lexicalEntries"][0]["entries"][0]["senses"][0]["subsenses"]
             for sub in subsenses:
                 return sub["definitions"][0]
         else:
@@ -39,9 +38,9 @@ class Merriam_webster:
 
         r = requests.get(url)
         data = json.loads(r.text)
-        senses = data[0]["shortdef"]
-        name = data[0]["meta"]["id"]
-        #print(type(senses))
+        senses = data[0].get("shortdef")
+        name = data[0].get("meta").get("id")
+        
         if not senses:
             return "empty"
         else:
@@ -52,10 +51,8 @@ class Merriam_webster:
 
         r = requests.get(url)
         data = json.loads(r.text)
-        senses = data[0]["shortdef"]
-        name = data[0]["meta"]["id"]
-        test = data[0].get("shortdef")
-        print(test)
+        senses = data[0].get("shortdef")
+        name = data[0].get("meta").get("id")
         
         if not senses:
             return "empty"
