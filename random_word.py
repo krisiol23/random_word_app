@@ -10,13 +10,14 @@ def translate():
     word = re.text
     word = word.replace("[","").replace("]","")
     print(word)
-    oxford = dictionary.Ox_dict(word)
-    merriam = dictionary.Merriam_webster(word)
+    oxford = Ox_dict(word)
+    merriam = Merriam_webster(word)
 
-    name_coll, senses_coll = merriam.search_coll()
-    name_the,senses_the= merriam.search_the()
+    result_coll = merriam.search_coll()
+    result_the = merriam.search_the()
     
-    return name_the, senses_the, name_coll, senses_coll, oxford.search()
+    return result_coll, result_the, oxford.search()
+
     #translation = translator.translate(word)
     #print(translation)
 
@@ -24,7 +25,14 @@ def translate():
     #print(tr_word)
     
 if __name__ == "__main__":
-    name_the, senses_the, name_coll, senses_coll, oxford = translate()
-    print(f"Merriam Webster Thesaurus  \n{name_the}: {senses_the}\n")
-    print(f"Merriam Webster Collegiate \n{name_coll}: {senses_coll}\n")
-    print(f"Oxford Dictionary \n{oxford}")
+    result_coll, result_the, oxford = translate()
+    
+    if "empty" in result_coll or "empty" in result_the or "empty" in oxford:
+        print(f"Merriam Webster Thesaurus  \n{result_the}\n")
+        print(f"Merriam Webster Collegiate \n{result_coll}\n")
+        print(f"Oxford Dictionary \n{oxford}")
+
+    else:
+        print(f"Merriam Webster Thesaurus  \n{result_the[0]}: {result_the[1]}\n")
+        print(f"Merriam Webster Collegiate \n{result_coll[0]}: {result_coll[1]}\n")
+        print(f"Oxford Dictionary \n{oxford}")

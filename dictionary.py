@@ -38,24 +38,30 @@ class Merriam_webster:
 
         r = requests.get(url)
         data = json.loads(r.text)
-        senses = data[0].get("shortdef")
-        name = data[0].get("meta").get("id")
-        
-        if not senses:
+        try:
+            senses = data[0].get("shortdef")
+            name = data[0].get("meta").get("id")
+            
+            if not senses:
+                return "empty" 
+            else:
+                return [name, senses]
+        except:
             return "empty"
-        else:
-            return name, senses
         
     def search_the(self):
         url = "https://dictionaryapi.com/api/v3/references/thesaurus/json/"+ self.word + "?key=" + self.app_key_the
 
         r = requests.get(url)
         data = json.loads(r.text)
-        senses = data[0].get("shortdef")
-        name = data[0].get("meta").get("id")
-        
-        if not senses:
+        try:
+            senses = data[0].get("shortdef")
+            name = data[0].get("meta").get("id")
+            
+            if not senses:
+                return "empty"
+            else:
+                return [name,senses]
+        except:
             return "empty"
-        else:
-            return name,senses
            
